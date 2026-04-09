@@ -8,10 +8,6 @@ const PORT = process.env.PORT || 5006;
 app.use(cors());
 app.use(express.json());
 
-/**
- * DATABASE OF OFFICIAL CERTIFICATION LINKS
- * Precisely mapped to the data shared by the user.
- */
 const certificationDatabase = [
   { 
     company: 'Dell', 
@@ -213,12 +209,6 @@ app.get('/api/search', (req, res) => {
 
   const query = q.toLowerCase().trim();
   
-  /**
-   * SEARCH LOGIC:
-   * 1. Exact company match gets priority.
-   * 2. Partial matches in title or description.
-   * 3. URL match for tech keywords.
-   */
   const results = certificationDatabase.filter(item => {
     const company = item.company.toLowerCase();
     const title = item.title.toLowerCase();
@@ -239,8 +229,6 @@ app.get('/api/search', (req, res) => {
 
 module.exports = app;
 
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Certification portal server active on port ${PORT}`);
-  });
-}
+app.listen(PORT, () => {
+  console.log(`Certification portal server active on port ${PORT}`);
+});
